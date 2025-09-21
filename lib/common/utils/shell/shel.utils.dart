@@ -28,15 +28,21 @@ class ShellUtils {
   static Future<void> flutterCreate(
     String path,
     String? org,
-    String iosLang,
-    String androidLang,
+    String? iosLang,
+    String? androidLang,
   ) async {
     LogService.info('Running `flutter create $path` …');
-
+    final iosOption = iosLang != null ? '-i $iosLang' : '';
+    final androidOption = androidLang != null ? '-a $androidLang' : '';
+    
     await run(
-        'flutter create --no-pub -i $iosLang -a $androidLang --org $org'
-        ' "$path"',
-        verbose: true);
+      'flutter create --no-pub $iosOption $androidOption --org $org "$path"',
+      verbose: true,
+    );
+    // await run(
+    //     'flutter create --no-pub -i $iosLang -a $androidLang --org $org'
+    //     ' "$path"',
+    //     verbose: true);
   }
 
   static Future<void> update(
